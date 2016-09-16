@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>Core @COREVER@</name>
+    <filename>@datadir@/backgrounds/core4/core4-timed.xml</filename>
+    <options>zoom</options>
+  </wallpaper>
+</wallpapers>
