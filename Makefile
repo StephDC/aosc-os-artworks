@@ -38,7 +38,7 @@ W169 = 5120
 H219 = 2880
 W219 = 6880
 
-all : png
+all : png xmlgen screenshot
 
 $(IMAGES:=-gen.svg) : ${IMAGES:=.svg}
 	sed	-e "s|>REL<|>$(REL)<|g" \
@@ -65,12 +65,17 @@ png : $(IMAGES_32:=-$(W32)x$(H32).png) \
       $(IMAGES_169:=-$(W169)x$(H169).png) \
       $(IMAGES_219:=-$(W219)x$(H219).png)
 
-$(XMLS:=.xml): ${XMLS:=.xml.in}
+$(XMLS:=.xml) : ${XMLS:=.xml.in}
 	sed	-e "s|@datadir@|$(DATAROOTDIR)|g" \
 		-e "s|@COREVER@|$(REL)|g" \
 		"$(subst .xml,.xml.in,$@)" > "$@"
 
-xmlgen: $(XMLS:=.xml)
+xmlgen : $(XMLS:=.xml)
+
+$(IMAGES_169:=-screenshot.png) : $(IMAGES:=-gen.svg)
+	inkscape -h 250 -w 400 -e $@ $(subst -screenshot.png,-gen.svg,$@)
+
+screenshot : $(IMAGES_169:=-screenshot.png)
 
 clean :
 	$(FIND) . -name '*gen*.svg' -exec $(RM) {} \;
