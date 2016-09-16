@@ -3,8 +3,9 @@ RATIOS = 32 43 169 219
 IMAGES_32 = 32/Day 32/Day-Plain 32/Night 32/Night-Plain
 IMAGES_43 = 43/Day 43/Day-Plain 43/Night 43/Night-Plain
 IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain
-IMAGES_219 = 219/Day 219/Day-Plain 219/Night 219/Night-Plain 
+IMAGES_219 = 219/Day 219/Day-Plain 219/Night 219/Night-Plain
 IMAGES = ${IMAGES_32} ${IMAGES_43} ${IMAGES_169} ${IMAGES_219}
+VARIANTS = Day Day-Plain Night Night-Plain
 XMLS = data/core4-plain-timed \
        data/core4-timed \
        data/core4 \
@@ -19,6 +20,9 @@ RM = rm -fv
 CP = cp -v
 MKDIR = mkdir -pv
 LN = ln -sv
+PUSHD = pushd
+POPD = popd
+MV = mv -v
 DESTDIR =
 DATAROOTDIR = /usr/share
 
@@ -82,17 +86,43 @@ clean :
 	$(FIND) . -name '*.png' -exec $(RM) {} \;
 	$(FIND) . -name '*.xml' -exec $(RM) {} \;
 
+install : install-images install-xml install-gnome install-mate install-xfce install-kde
+
 install-images : png
 	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
-	$(CP) $(IMAGES_32:=-$(W32)x$(H32).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
-	$(CP) $(IMAGES_43:=-$(W43)x$(H43).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
-	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
-	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
+	$(CP) $(IMAGES_32:=-$(W32)x$(H32).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) $(IMAGES_43:=-$(W43)x$(H43).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
 
-install-gnome : install-images
+install-xml: xmlgen
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/background-properties
+	$(CP) data/core4-plain-timed.xml ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) data/core4-timed.xml ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) data/core4.xml ${DESTDIR}/$(DATAROOTDIR)/background-properties
+	$(CP) data/core4-plain.xml ${DESTDIR}/$(DATAROOTDIR)/background-properties
+	$(CP) data/core4-wallpapers.xml ${DESTDIR}/$(DATAROOTDIR)/background-properties
+
+install-gnome : install-xml install-images
+	$(LN) background-properties ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
+
+install-mate : install-xml install-images
+	$(LN) background-properties ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
+
+install-xfce : install-images
+	$(LN) core4 ${DESTDIR}/$(DATAROOTDIR)/backgrounds/xfce
 
 install-kde : install-images
-
-install-mint : install-images
+	for variant in $(VARIANTS); do \
+		$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/images ; \
+		$(CP) data/$${variant}.desktop ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/metadata.desktop ; \
+		$(CP) 169/$${variant}-screenshot.png ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/screenshot.png ; \
+		$(PUSHD) ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/images ; \
+		$(LN) ../../../../backgrounds/core4/$${variant}-[0-9]*.png . ; \
+		for i in *.png; do \
+			$(MV) $${i} $${i##*-} ; \
+		done ; \
+		$(POPD) ; \
+	done
 
 .PHONY: all
