@@ -12,6 +12,12 @@ XMLS = data/core4-plain-timed \
        data/core4-plain \
        data/core4-wallpapers
 
+# Supid KDE doesn't know how to deal with multi-resolution.
+RESO169 = 1366x768 1600x900 1920x1080
+RESO219 = 2560x1080 3440x1440
+RESO32 = 1152x768 1280x854 1440x960 2160x1440
+RESO43 = 800x600 1024x768 1280x960 1600x1200 2048x1536
+
 # Command definitions.
 CD = cd
 FIND = find
@@ -127,6 +133,18 @@ install-kde : install-images
 		$(LN) ../../../../backgrounds/core4/$${variant}-[0-9]*.png . ; \
 		for i in *.png; do \
 			$(MV) $${i} $${i##*-} ; \
+		done ; \
+		for reso169 in $(RESO169); do \
+			$(LN) 5120x2880.png $${reso169}.png ; \
+		done ; \
+		for reso219 in $(RESO219); do \
+			$(LN) 6880x2880.png $${reso219}.png ; \
+		done ; \
+		for reso32 in $(RESO32); do \
+			$(LN) 4500x3000.png $${reso32}.png ; \
+		done ; \
+		for reso43 in $(RESO43); do \
+			$(LN) 4000x3000.png $${reso43}.png ; \
 		done ; \
 		$(POPD) ; \
 	done
