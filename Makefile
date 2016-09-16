@@ -36,7 +36,7 @@ W219 = 6880
 all : png
 
 $(IMAGES:=-gen.svg) : ${IMAGES:=.svg}
-	sed -e "s|>REL<|>$(REL)<|g" \
+	sed	-e "s|>REL<|>$(REL)<|g" \
 		-e "s|ARCHIT|$(ARCH)|g" \
 		-e "s|RV|$(REL)|g" \
 		-e "s|REL_DATE|$(DATE)|g" \
