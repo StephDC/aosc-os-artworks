@@ -83,14 +83,11 @@ clean :
 	$(FIND) . -name '*.xml' -exec $(RM) {} \;
 
 install-images : png
-	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/32
-	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/43
-	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/169
-	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/219
-	$(CP) $(IMAGES_32:=-$(W32)x$(H32).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/32
-	$(CP) $(IMAGES_43:=-$(W43)x$(H43).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/43
-	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/169
-	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/219
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
+	$(CP) $(IMAGES_32:=-$(W32)x$(H32).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
+	$(CP) $(IMAGES_43:=-$(W43)x$(H43).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
+	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
+	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/
 
 install-gnome : install-images
 
