@@ -1,19 +1,21 @@
 # Basic list of files to be generated/converted.
-SUBDIRS	= 32 43 169 219
-SVG = Day.svg \
-      Day-Plain.svg \
-      Night.svg \
-      Night-Plain.svg
-SVGGEN = Day-gen.svg \
-         Day-Plain-gen.svg \
-         Night-gen.svg \
-         Night-Plain-gen.svg
+RATIOS = 32 43 169 219
+IMAGES_32 = 32/Day 32/Day-Plain 32/Night 32/Night-Plain
+IMAGES_43 = 43/Day 43/Day-Plain 43/Night 43/Night-Plain
+IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain
+IMAGES_219 = 219/Day 219/Day-Plain 219/Night 219/Night-Plain 
+IMAGES = ${IMAGES_32} ${IMAGES_43} ${IMAGES_169} ${IMAGES_219}
 
 # Command definitions.
 CD = cd
 FIND = find
 SED = sed
 RM = rm -fv
+CP = cp -v
+MKDIR = mkdir -pv
+LN = ln -sv
+DESTDIR =
+DATAROOTDIR = /usr/share
 
 # Version definitions.
 CORE = 4.0.0
@@ -31,82 +33,51 @@ W169 = 5120
 H219 = 2880
 W219 = 6880
 
-all: gen32 gen43 gen169 gen219 png32 png43 png169 png219
+all : png
 
-gen32:
-	$(CD) 32/ && \
-	for svg in $(SVG) ; do \
-		sed -e "s|>REL<|>$(REL)<|g" \
-		    -e "s|ARCHIT|$(ARCH)|g" \
-		    -e "s|RV|$(REL)|g" \
-		    -e "s|REL_DATE|$(DATE)|g" \
-		    -e "s|COREV|$(CORE)|g" \
-		    "$$svg" > "$${svg/.svg/-gen.svg}" ; \
-	done
+$(IMAGES:=-gen.svg) : ${IMAGES:=.svg}
+	sed -e "s|>REL<|>$(REL)<|g" \
+		-e "s|ARCHIT|$(ARCH)|g" \
+		-e "s|RV|$(REL)|g" \
+		-e "s|REL_DATE|$(DATE)|g" \
+		-e "s|COREV|$(CORE)|g" \
+		"$(subst -gen.svg,.svg,$@)" > "$@"
 
-gen43:
-	$(CD) 43/ && \
-	for svg in $(SVG) ; do \
-		sed -e "s|>REL<|>$(REL)<|g" \
-		    -e "s|ARCHIT|$(ARCH)|g" \
-		    -e "s|RV|$(REL)|g" \
-		    -e "s|REL_DATE|$(DATE)|g" \
-		    -e "s|COREV|$(CORE)|g" \
-		    "$$svg" > "$${svg/.svg/-gen.svg}" ; \
-	done
+$(IMAGES_32:=-$(W32)x$(H32).png) : $(IMAGES_32:=-gen.svg)
+	inkscape -h $(H32) -w $(W32) -e $@ $(subst -$(W32)x$(H32).png,-gen.svg,$@)
 
-gen169:
-	$(CD) 169/ && \
-	for svg in $(SVG) ; do \
-		sed -e "s|>REL<|>$(REL)<|g" \
-		    -e "s|ARCHIT|$(ARCH)|g" \
-		    -e "s|RV|$(REL)|g" \
-		    -e "s|REL_DATE|$(DATE)|g" \
-		    -e "s|COREV|$(CORE)|g" \
-		    "$$svg" > "$${svg/.svg/-gen.svg}" ; \
-	done
+$(IMAGES_43:=-$(W43)x$(H43).png) : $(IMAGES_43:=-gen.svg)
+	inkscape -h $(H43) -w $(W43) -e $@ $(subst -$(W43)x$(H43).png,-gen.svg,$@)
 
-gen219:
-	$(CD) 219/ && \
-	for svg in $(SVG) ; do \
-		sed -e "s|>REL<|>$(REL)<|g" \
-		    -e "s|ARCHIT|$(ARCH)|g" \
-		    -e "s|RV|$(REL)|g" \
-		    -e "s|REL_DATE|$(DATE)|g" \
-		    -e "s|COREV|$(CORE)|g" \
-		    "$$svg" > "$${svg/.svg/-gen.svg}" ; \
-	done
+$(IMAGES_169:=-$(W169)x$(H169).png) : $(IMAGES_169:=-gen.svg)
+	inkscape -h $(H169) -w $(W169) -e $@ $(subst -$(W169)x$(H169).png,-gen.svg,$@)
 
-png32: gen32
-	$(CD) 32/ && \
-	for svg in $(SVGGEN) ; do \
-		inkscape -h $(H32) -w $(W32) \
-		         -e $${svg/-gen.svg/-$(W32)x$(H32).png} "$$svg" ; \
-	done
+$(IMAGES_219:=-$(W219)x$(H219).png) : $(IMAGES_219:=-gen.svg)
+	inkscape -h $(H219) -w $(W219) -e $@ $(subst -$(W219)x$(H219).png,-gen.svg,$@)
 
-png43: gen43
-	$(CD) 43/ && \
-	for svg in $(SVGGEN) ; do \
-		inkscape -h $(H43) -w $(W43) \
-		         -e $${svg/-gen.svg/-$(W43)x$(H43).png} "$$svg" ; \
-	done
+png : $(IMAGES_32:=-$(W32)x$(H32).png) \
+      $(IMAGES_43:=-$(W43)x$(H43).png) \
+      $(IMAGES_169:=-$(W169)x$(H169).png) \
+      $(IMAGES_219:=-$(W219)x$(H219).png)
 
-png169: gen169
-	$(CD) 169/ && \
-	for svg in $(SVGGEN) ; do \
-		inkscape -h $(H169) -w $(W169) \
-		         -e $${svg/-gen.svg/-$(W169)x$(H169).png} "$$svg" ; \
-	done
-
-png219: gen219
-	$(CD) 219/ && \
-	for svg in $(SVGGEN) ; do \
-		inkscape -h $(H219) -w $(W219) \
-		         -e $${svg/-gen.svg/-$(W219)x$(H219).png} "$$svg" ; \
-	done
-
-clean:
+clean :
 	$(FIND) . -name '*gen*.svg' -exec $(RM) {} \;
 	$(FIND) . -name '*.png' -exec $(RM) {} \;
+
+install-images : png
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/32
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/43
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/169
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/219
+	$(CP) $(IMAGES_32:=-$(W32)x$(H32).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/32
+	$(CP) $(IMAGES_43:=-$(W43)x$(H43).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/43
+	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/169
+	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/219
+
+install-gnome : install-images
+
+install-kde : install-images
+
+install-mint : install-images
 
 .PHONY: all
