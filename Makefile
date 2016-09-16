@@ -5,6 +5,11 @@ IMAGES_43 = 43/Day 43/Day-Plain 43/Night 43/Night-Plain
 IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain
 IMAGES_219 = 219/Day 219/Day-Plain 219/Night 219/Night-Plain 
 IMAGES = ${IMAGES_32} ${IMAGES_43} ${IMAGES_169} ${IMAGES_219}
+XMLS = data/core4-plain-timed \
+       data/core4-timed \
+       data/core4 \
+       data/core4-plain \
+       data/core4-wallpapers
 
 # Command definitions.
 CD = cd
@@ -60,9 +65,17 @@ png : $(IMAGES_32:=-$(W32)x$(H32).png) \
       $(IMAGES_169:=-$(W169)x$(H169).png) \
       $(IMAGES_219:=-$(W219)x$(H219).png)
 
+$(XMLS:=.xml): ${XMLS:=.xml.in}
+	sed	-e "s|@datadir@|$(DATAROOTDIR)|g" \
+		-e "s|@COREVER@|$(REL)|g" \
+		"$(subst .xml,.xml.in,$@)" > "$@"
+
+xmlgen: $(XMLS:=.xml)
+
 clean :
 	$(FIND) . -name '*gen*.svg' -exec $(RM) {} \;
 	$(FIND) . -name '*.png' -exec $(RM) {} \;
+	$(FIND) . -name '*.xml' -exec $(RM) {} \;
 
 install-images : png
 	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4/32
