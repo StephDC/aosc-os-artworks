@@ -1,5 +1,4 @@
 # Basic list of files to be generated/converted.
-RATIOS = 32 43 169 219
 IMAGES_32 = 32/Day 32/Day-Plain 32/Night 32/Night-Plain
 IMAGES_43 = 43/Day 43/Day-Plain 43/Night 43/Night-Plain
 IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain
@@ -25,7 +24,7 @@ SED = sed
 RM = rm -fv
 CP = cp -v
 MKDIR = mkdir -pv
-LN = ln -sv
+LN = ln -svf
 PUSHD = pushd
 POPD = popd
 MV = mv -v
@@ -48,7 +47,7 @@ W169 = 5120
 H219 = 2880
 W219 = 6880
 
-all : png xmlgen screenshot
+all : png $(XMLS:=.xml) screenshot
 
 $(IMAGES:=-gen.svg) : ${IMAGES:=.svg}
 	sed	-e "s|>REL<|>$(REL)<|g" \
@@ -80,8 +79,6 @@ $(XMLS:=.xml) : ${XMLS:=.xml.in}
 		-e "s|@COREVER@|$(REL)|g" \
 		"$(subst .xml,.xml.in,$@)" > "$@"
 
-xmlgen : $(XMLS:=.xml)
-
 $(IMAGES_169:=-screenshot.png) : $(IMAGES:=-gen.svg)
 	inkscape -h 250 -w 400 -e $@ $(subst -screenshot.png,-gen.svg,$@)
 
@@ -101,7 +98,7 @@ install-images : png
 	$(CP) $(IMAGES_169:=-$(W169)x$(H169).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
 	$(CP) $(IMAGES_219:=-$(W219)x$(H219).png) ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
 
-install-xml: xmlgen
+install-xml : $(XMLS:=.xml)
 	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/background-properties
 	$(CP) data/core4-plain-timed.xml ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
 	$(CP) data/core4-timed.xml ${DESTDIR}/$(DATAROOTDIR)/backgrounds/core4
@@ -149,4 +146,6 @@ install-kde : install-images
 		$(POPD) ; \
 	done
 
-.PHONY: all
+.PHONY : all clean png \
+		install install-image install-xml \
+		install-gnome install-mate install-xfce install-kde
