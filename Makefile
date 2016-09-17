@@ -104,20 +104,26 @@ install-xml: xmlgen
 	$(CP) data/core4-wallpapers.xml ${DESTDIR}/$(DATAROOTDIR)/background-properties
 
 install-gnome : install-xml install-images
-	$(LN) background-properties ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
+	$(LN) ../background-properties/core4.xml ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
+	$(LN) ../background-properties/core4-plain.xml ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
+	$(LN) ../background-properties/core4-wallpapers.xml ${DESTDIR}/$(DATAROOTDIR)/gnome-background-properties
 
 install-mate : install-xml install-images
-	$(LN) background-properties ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
+	$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
+	$(LN) ../background-properties/core4.xml ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
+	$(LN) ../background-properties/core4-plain.xml ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
+	$(LN) ../background-properties/core4-wallpapers.xml ${DESTDIR}/$(DATAROOTDIR)/mate-background-properties
 
 install-xfce : install-images
 	$(LN) core4 ${DESTDIR}/$(DATAROOTDIR)/backgrounds/xfce
 
 install-kde : install-images
 	for variant in $(VARIANTS); do \
-		$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/images ; \
-		$(CP) data/$${variant}.desktop ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/metadata.desktop ; \
-		$(CP) 169/$${variant}-screenshot.png ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/screenshot.png ; \
-		$(PUSHD) ${DESTDIR}/$(DATAROOTDIR)/Wallpapers/$${variant}/contents/images ; \
+		$(MKDIR) ${DESTDIR}/$(DATAROOTDIR)/wallpapers/$${variant}/contents/images ; \
+		$(CP) data/$${variant}.desktop ${DESTDIR}/$(DATAROOTDIR)/wallpapers/$${variant}/metadata.desktop ; \
+		$(CP) 169/$${variant}-screenshot.png ${DESTDIR}/$(DATAROOTDIR)/wallpapers/$${variant}/contents/screenshot.png ; \
+		$(PUSHD) ${DESTDIR}/$(DATAROOTDIR)/wallpapers/$${variant}/contents/images ; \
 		$(LN) ../../../../backgrounds/core4/$${variant}-[0-9]*.png . ; \
 		for i in *.png; do \
 			$(MV) $${i} $${i##*-} ; \
