@@ -11,7 +11,7 @@ XMLS = data/core4-plain-timed \
        data/core4-plain \
        data/core4-wallpapers
 
-# Supid KDE doesn't know how to deal with multi-resolution.
+# Stupid KDE doesn't know how to deal with multi-resolution.
 RESO169 = 1366x768 1600x900 1920x1080
 RESO219 = 2560x1080 3440x1440
 RESO32 = 1152x768 1280x854 1440x960 2160x1440
