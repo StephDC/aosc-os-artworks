@@ -9,9 +9,9 @@
     <second>00</second>
   </starttime>
 
-  <!-- Day wallpaper, show for 12 hours, that is, to 7:00 P.M. -->
+  <!-- Day wallpaper, show for 12 hours, that is, to 7:00 P.M. -1s -->
   <static>
-    <duration>43200.0</duration>
+    <duration>43199.0</duration>
     <file>
       <size width="4500" height="3000">@datadir@/backgrounds/core4/Day-Plain-4500x3000.png</size>
       <size width="4000" height="3000">@datadir@/backgrounds/core4/Day-Plain-4000x3000.png</size>
@@ -20,7 +20,7 @@
     </file>
   </static>
 
-  <!-- Transition to Night wallpaper at 6:00 P.M. +1s -->
+  <!-- Transition to Night wallpaper at 7:00 P.M. -->
   <transition type="overlay">
     <duration>1.0</duration>
     <from>
@@ -47,4 +47,21 @@
       <size width="6880" height="2880">@datadir@/backgrounds/core4/Night-Plain-6880x2880.png</size>
     </file>
   </static>
+
+  <!-- Transition to Day wallpaper at 7:00 P.M. -->
+  <transition type="overlay">
+    <duration>1.0</duration>
+    <from>
+      <size width="4500" height="3000">@datadir@/backgrounds/core4/Night-Plain-4500x3000.png</size>
+      <size width="4000" height="3000">@datadir@/backgrounds/core4/Night-Plain-4000x3000.png</size>
+      <size width="5120" height="2880">@datadir@/backgrounds/core4/Night-Plain-5120x2880.png</size>
+      <size width="6880" height="2880">@datadir@/backgrounds/core4/Night-Plain-6880x2880.png</size>
+    </from>
+    <to>
+      <size width="4500" height="3000">@datadir@/backgrounds/core4/Day-Plain-4500x3000.png</size>
+      <size width="4000" height="3000">@datadir@/backgrounds/core4/Day-Plain-4000x3000.png</size>
+      <size width="5120" height="2880">@datadir@/backgrounds/core4/Day-Plain-5120x2880.png</size>
+      <size width="6880" height="2880">@datadir@/backgrounds/core4/Day-Plain-6880x2880.png</size>
+    </to>
+  </transition>
 </background>
