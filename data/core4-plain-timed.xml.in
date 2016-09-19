@@ -48,7 +48,7 @@
     </file>
   </static>
 
-  <!-- Transition to Day wallpaper at 7:00 P.M. -->
+  <!-- Transition to Day wallpaper at 7:00 A.M. -->
   <transition type="overlay">
     <duration>1.0</duration>
     <from>
