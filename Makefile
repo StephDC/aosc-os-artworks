@@ -9,7 +9,8 @@ XMLS = data/core4-plain-timed \
        data/core4-timed \
        data/core4 \
        data/core4-plain \
-       data/core4-wallpapers
+       data/core4-wallpapers \
+       data/hourly
 
 # Stupid KDE doesn't know how to deal with multi-resolution.
 RESO169 = 1366x768 1600x900 1920x1080
