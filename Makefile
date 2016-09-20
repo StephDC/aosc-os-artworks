@@ -10,7 +10,8 @@ XMLS = data/core4-plain-timed \
        data/core4 \
        data/core4-plain \
        data/core4-wallpapers \
-       data/hourly
+       data/hourly \
+       data/alternating
 
 # Stupid KDE doesn't know how to deal with multi-resolution.
 RESO169 = 1366x768 1600x900 1920x1080
@@ -59,16 +60,16 @@ $(IMAGES:=-gen.svg) : ${IMAGES:=.svg}
 		"$(subst -gen.svg,.svg,$@)" > "$@"
 
 $(IMAGES_32:=-$(W32)x$(H32).png) : $(IMAGES_32:=-gen.svg)
-	inkscape -h $(H32) -w $(W32) -e $@ $(subst -$(W32)x$(H32).png,-gen.svg,$@)
+	convert $(subst -$(W32)x$(H32).png,-gen.svg,$@) -resize $(W32)x$(H32) $@
 
 $(IMAGES_43:=-$(W43)x$(H43).png) : $(IMAGES_43:=-gen.svg)
-	inkscape -h $(H43) -w $(W43) -e $@ $(subst -$(W43)x$(H43).png,-gen.svg,$@)
+	convert $(subst -$(W43)x$(H43).png,-gen.svg,$@) -resize $(W43)x$(H43) $@
 
 $(IMAGES_169:=-$(W169)x$(H169).png) : $(IMAGES_169:=-gen.svg)
-	inkscape -h $(H169) -w $(W169) -e $@ $(subst -$(W169)x$(H169).png,-gen.svg,$@)
+	convert $(subst -$(W169)x$(H169).png,-gen.svg,$@) -resize $(W169)x$(H169) $@
 
 $(IMAGES_219:=-$(W219)x$(H219).png) : $(IMAGES_219:=-gen.svg)
-	inkscape -h $(H219) -w $(W219) -e $@ $(subst -$(W219)x$(H219).png,-gen.svg,$@)
+	convert $(subst -$(W219)x$(H219).png,-gen.svg,$@) -resize $(W219)x$(H219) $@ 
 
 png : $(IMAGES_32:=-$(W32)x$(H32).png) \
       $(IMAGES_43:=-$(W43)x$(H43).png) \
@@ -81,7 +82,7 @@ $(XMLS:=.xml) : ${XMLS:=.xml.in}
 		"$(subst .xml,.xml.in,$@)" > "$@"
 
 $(IMAGES_169:=-screenshot.png) : $(IMAGES:=-gen.svg)
-	inkscape -h 250 -w 400 -e $@ $(subst -screenshot.png,-gen.svg,$@)
+	convert $(subst -screenshot.png,-gen.svg,$@) -resize 400x250 $@
 
 screenshot : $(IMAGES_169:=-screenshot.png)
 
