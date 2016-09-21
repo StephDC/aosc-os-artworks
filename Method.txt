@@ -1,0 +1,5 @@
+1. Create all of the necessary weather wallpapers. Save each file into a folder named by the weather.
+2. Make would automatically create those png files with the correct version numbers.
+3. Installation would put all of those wallpapers into the /usr/share/weatherWallpaper folder
+4. Each hour, the cron script come into play and link the /usr/share/weatherWallpaper/$(WeatherGetter) subfolders to /usr/share/weatherWallpaper/$(echo $(date +%s) / 3600 % 2 | bc).
+5. The next hour's photo would then be determined - Automatically reading the /usr/share/weatherWallpaper/$(echo \($(date +%s) / 3600 % 2 + 1\) | bc) to find the correct resolution and use it as the wallpaper. This is achieved by using the Alternating.xml and the calculation was already done.

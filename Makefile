@@ -1,7 +1,7 @@
 # Basic list of files to be generated/converted.
 IMAGES_32 = 32/Day 32/Day-Plain 32/Night 32/Night-Plain
 IMAGES_43 = 43/Day 43/Day-Plain 43/Night 43/Night-Plain
-IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain
+IMAGES_169 = 169/Day 169/Day-Plain 169/Night 169/Night-Plain 169/0 169/1
 IMAGES_219 = 219/Day 219/Day-Plain 219/Night 219/Night-Plain
 IMAGES = ${IMAGES_32} ${IMAGES_43} ${IMAGES_169} ${IMAGES_219}
 VARIANTS = Day Day-Plain Night Night-Plain

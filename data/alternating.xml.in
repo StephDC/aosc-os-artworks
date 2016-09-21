@@ -11,32 +11,6 @@
 		<duration>3595</duration>
 		<file>
 			<from>
-				<size height="3000" width="4500">@datadir@/backgrounds/core4/img0-4500x3000.png</size>
-				<size height="3000" width="4000">@datadir@/backgrounds/core4/img0-4000x3000.png</size>
-				<size height="2880" width="5120">@datadir@/backgrounds/core4/img0-5120x2880.png</size>
-				<size height="2880" width="6880">@datadir@/backgrounds/core4/img0-6880x2880.png</size>
-			</from>
-		</file>
-	</static>
-	<transition type="overlay">
-		<duration>5</duration>
-		<from>
-			<size height="3000" width="4500">@datadir@/backgrounds/core4/img0-4500x3000.png</size>
-			<size height="3000" width="4000">@datadir@/backgrounds/core4/img0-4000x3000.png</size>
-			<size height="2880" width="5120">@datadir@/backgrounds/core4/img0-5120x2880.png</size>
-			<size height="2880" width="6880">@datadir@/backgrounds/core4/img0-6880x2880.png</size>
-		</from>
-		<to>
-			<size height="3000" width="4500">@datadir@/backgrounds/core4/img1-4500x3000.png</size>
-			<size height="3000" width="4000">@datadir@/backgrounds/core4/img1-4000x3000.png</size>
-			<size height="2880" width="5120">@datadir@/backgrounds/core4/img1-5120x2880.png</size>
-			<size height="2880" width="6880">@datadir@/backgrounds/core4/img1-6880x2880.png</size>
-		</to>
-	</transition>
-	<static>
-		<duration>3595</duration>
-		<file>
-			<from>
 				<size height="3000" width="4500">@datadir@/backgrounds/core4/img1-4500x3000.png</size>
 				<size height="3000" width="4000">@datadir@/backgrounds/core4/img1-4000x3000.png</size>
 				<size height="2880" width="5120">@datadir@/backgrounds/core4/img1-5120x2880.png</size>
@@ -629,6 +603,32 @@
 			<size height="3000" width="4000">@datadir@/backgrounds/core4/img0-4000x3000.png</size>
 			<size height="2880" width="5120">@datadir@/backgrounds/core4/img0-5120x2880.png</size>
 			<size height="2880" width="6880">@datadir@/backgrounds/core4/img0-6880x2880.png</size>
+		</to>
+	</transition>
+	<static>
+		<duration>3595</duration>
+		<file>
+			<from>
+				<size height="3000" width="4500">@datadir@/backgrounds/core4/img0-4500x3000.png</size>
+				<size height="3000" width="4000">@datadir@/backgrounds/core4/img0-4000x3000.png</size>
+				<size height="2880" width="5120">@datadir@/backgrounds/core4/img0-5120x2880.png</size>
+				<size height="2880" width="6880">@datadir@/backgrounds/core4/img0-6880x2880.png</size>
+			</from>
+		</file>
+	</static>
+	<transition type="overlay">
+		<duration>5</duration>
+		<from>
+			<size height="3000" width="4500">@datadir@/backgrounds/core4/img0-4500x3000.png</size>
+			<size height="3000" width="4000">@datadir@/backgrounds/core4/img0-4000x3000.png</size>
+			<size height="2880" width="5120">@datadir@/backgrounds/core4/img0-5120x2880.png</size>
+			<size height="2880" width="6880">@datadir@/backgrounds/core4/img0-6880x2880.png</size>
+		</from>
+		<to>
+			<size height="3000" width="4500">@datadir@/backgrounds/core4/img1-4500x3000.png</size>
+			<size height="3000" width="4000">@datadir@/backgrounds/core4/img1-4000x3000.png</size>
+			<size height="2880" width="5120">@datadir@/backgrounds/core4/img1-5120x2880.png</size>
+			<size height="2880" width="6880">@datadir@/backgrounds/core4/img1-6880x2880.png</size>
 		</to>
 	</transition>
 </background>
